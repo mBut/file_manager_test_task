@@ -1,0 +1,17 @@
+My libraries choices
+
+CarrierWave - I chosed this gem for files management as less file type independent. It's main oponent Paperclip can be also used to upload any type of files, but in my opinion it's implementation is more image specific. As also CarrierWave has carrierwave_direct extension what makes simple to upload and mount files directly to S3.
+
+Dropzone - for me all JavaScript libraries that provide drag-and-drop file upload are more or less the same, but this one has a lot of params to configure it.
+
+UUID as primary key. I chosed it because directories and files are not objects with plain arangement and with uuid routes to such objects could be represented better.
+
+I used FileManager namespace for Folder and File models just to provide intuitive naming, but do not override kernel classes.
+
+My ideas:
+
+1. Currently it's made very rough, but mainly in such projects I focus on data privace validation. E.g. if project would have users, to check that only owner can manipulate with files and folders.
+2. Implement folder/file manipulation: rename, remove, copy
+3. Now to represent changes in folders uses redirect or hard page reload. Of course for better UI/UX it's better to implement file management as a single page app.
+4. File/Folder move by drag-n-drop is buggy and requires coupld of UX/UI fixes.
+5. Hide create folder form and make it visile when 'Add folder' clicked
