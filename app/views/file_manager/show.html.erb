@@ -56,7 +56,7 @@
           <% @folder.files.each do |file| %>
             <div class="file-box">
               <div class="file">
-                <a href="#">
+                <%= link_to file.file_object.url do %>
                   <span class="corner"></span>
 
                   <div class="icon">
@@ -73,7 +73,7 @@
                     <br>
                     <small><%= file.created_at.strftime("Added: %b %d, %Y") %></small>
                   </div>
-                </a>
+                <% end %>
               </div>
             </div>
           <% end %>
