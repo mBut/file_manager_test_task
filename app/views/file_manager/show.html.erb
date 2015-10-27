@@ -18,7 +18,7 @@
             <h5>Folders</h5>
             <ul class="folder-list" style="padding: 0">
               <%- unless @folder.root? %>
-                <li>
+                <li class="folder">
                   <%= link_to file_manager_path(@folder.parent_folder) do %>
                     <i class="fa fa-level-up fa-flip-horizontal"></i> <%= @folder.parent_folder.title %>
                   <%- end %>
@@ -26,7 +26,7 @@
               <%- end %>
 
               <% @folder.folders.each do |child_folder| %>
-                <li>
+                <li class="folder">
                   <%= link_to file_manager_path(child_folder) do %>
                     <i class="fa fa-folder"></i> <%= child_folder.title %>
                   <%- end %>
@@ -53,8 +53,27 @@
       <div class="row">
         <div class="col-lg-12">
 
+          <% @folder.folders.each do |folder| %>
+            <div class="file-box draggable-file folder" data-type="folder" data-id="<%= folder.id %>">
+              <div class="file">
+                <%= link_to file_manager_path(folder) do %>
+                  <span class="corner"></span>
+
+                  <div class="icon">
+                    <i class="fa fa-folder"></i>
+                  </div>
+                  <div class="file-name">
+                    <span><%= folder.title %></span>
+                    <br>
+                    <small><%= folder.created_at.strftime("Added: %b %d, %Y") %></small>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
           <% @folder.files.each do |file| %>
-            <div class="file-box">
+            <div class="file-box draggable-file" data-type="file" data-id="<%= file.id %>">
               <div class="file">
                 <%= link_to file.file_object.url do %>
                   <span class="corner"></span>
@@ -69,7 +88,7 @@
                     <% end %>
                   </div>
                   <div class="file-name">
-                    <%= file.title %>
+                    <span><%= file.title %></span>
                     <br>
                     <small><%= file.created_at.strftime("Added: %b %d, %Y") %></small>
                   </div>

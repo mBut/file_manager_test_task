@@ -13,8 +13,9 @@ Rails.application.routes.draw do
     end
 
     member do
-      post :create
       get :file_uploaded
+      post :create
+      post :move_object
     end
   end
 

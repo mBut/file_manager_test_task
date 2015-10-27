@@ -1,8 +1,9 @@
 class FileManagerPage
   constructor: ->
-    @$scope = $('#file-manager')
-    @$new_file_form = $('form#new_file_uploader', @$scope)
-    @bind()
+    if $('#file-manager').length > 0
+      @$scope = $('#file-manager')
+      @$new_file_form = $('form#new_file_uploader', @$scope)
+      @bind()
 
   bind: ->
     @$scope.dropzone
@@ -28,5 +29,33 @@ class FileManagerPage
     $("#upload-file-btn", @$scope).on 'click', =>
       $("input[type='file']", @$new_file_form).trigger('click')
 
-$(document).ready ->
-  new FileManagerPage if $('#file-manager').length > 0
+    $('.draggable-file', @$scope).draggable
+      containment: @$scope
+      helper: (e) ->
+        $el = $(e.currentTarget)
+
+        fileName = $el.find('.file-name > span').text()
+        $("<div/>")
+          .addClass 'panel panel-default'
+          .css
+            padding: '10px'
+          .text fileName
+
+    $('.folder', @$scope).droppable
+      drop: (e, ui) ->
+        $folder = $(this)
+        $el = $(ui.draggable)
+
+        $.ajax
+          method: 'POST'
+          url: $('a:first-child', $folder).attr('href') + '/move_object'
+          data:
+            object:
+              type: $el.data('type')
+              id: $el.data('id')
+          success: ->
+            $el.remove()
+
+
+$(document).ready -> new FileManagerPage
+$(document).on 'page:load', -> new FileManagerPage
