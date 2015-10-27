@@ -1,0 +1,5 @@
+== README
+
+This app provides a minimal rails setup with  theme called Inspina[http://webapplayers.com/inspinia_admin-v2.3/]. The theme is based on Bootstrap and provides a lot of additional, easy to use components and styles. The theme should make it easy to put together some UI functionality without spending too much time on it.
+
+To get started, just bundle and rails s.

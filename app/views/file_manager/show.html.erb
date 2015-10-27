@@ -1,0 +1,85 @@
+<div id="file-manager" class="wrapper wrapper-content">
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="ibox float-e-margins">
+        <div class="ibox-content">
+          <div class="file-manager">
+
+            <%- uploader = FileManager::Folder.new.files.build.file_object %>
+            <%- uploader.success_action_redirect = file_uploaded_file_manager_url(@folder) %>
+            <%= direct_upload_form_for uploader, html: {style: "display: none;"} do |f| %>
+              <%= f.file_field :file %>
+            <% end %>
+
+            <a id="upload-file-btn" href="#" class="btn btn-primary btn-block">Upload file</a>
+
+            <div class="hr-line-dashed"></div>
+
+            <h5>Folders</h5>
+            <ul class="folder-list" style="padding: 0">
+              <%- unless @folder.root? %>
+                <li>
+                  <%= link_to file_manager_path(@folder.parent_folder) do %>
+                    <i class="fa fa-level-up fa-flip-horizontal"></i> <%= @folder.parent_folder.title %>
+                  <%- end %>
+                </li>
+              <%- end %>
+
+              <% @folder.folders.each do |child_folder| %>
+                <li>
+                  <%= link_to file_manager_path(child_folder) do %>
+                    <i class="fa fa-folder"></i> <%= child_folder.title %>
+                  <%- end %>
+                </li>
+              <%- end %>
+            </ul>
+
+            <%= form_tag file_manager_path(@folder) do %>
+              <div class="form-group">
+                <%= text_field_tag 'folder[title]', nil, class: "form-control", placeholder: "Folder name"  %>
+              </div>
+              <div>
+                <%= submit_tag "Create folder", class: "btn btn-primary btn-block" %>
+              </div>
+            <% end %>
+
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-9 animated fadeInRight">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <% @folder.files.each do |file| %>
+            <div class="file-box">
+              <div class="file">
+                <a href="#">
+                  <span class="corner"></span>
+
+                  <div class="icon">
+                    <% if file.is_image? %>
+                      <%= image_tag file.file_object.url, style: 'max-width: 100%' %>
+                    <% elsif file.is_pdf? %>
+                      <i class="fa fa-file-pdf-o"></i>
+                    <% else %>
+                      <i class="fa fa-file"></i>
+                    <% end %>
+                  </div>
+                  <div class="file-name">
+                    <%= file.title %>
+                    <br>
+                    <small><%= file.created_at.strftime("Added: %b %d, %Y") %></small>
+                  </div>
+                </a>
+              </div>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

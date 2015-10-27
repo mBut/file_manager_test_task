@@ -1,0 +1,29 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="sidebar-collapse">
+    <ul class="nav metismenu" id="side-menu">
+      <li class="nav-header">
+        <div class="dropdown profile-element">
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <span class="clear">
+              <span class="block m-t-xs">
+                <strong class="font-bold">Example user</strong>
+              </span> <span class="text-muted text-xs block">Example menu <b class="caret"></b></span>
+            </span>
+          </a>
+          <ul class="dropdown-menu animated fadeInRight m-t-xs">
+              <li><a href="#">Logout</a></li>
+          </ul>
+        </div>
+        <div class="logo-element">
+            IN+
+        </div>
+      </li>
+      <li class="<%= 'active' if params[:controller] == 'file_manager' %>">
+          <%= link_to file_manager_index_path do %>
+          <i class="fa fa-dashboard"></i> <span class="nav-label">File manager</span>
+          <% end %>
+      </li>
+    </ul>
+
+  </div>
+</nav>
